@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
+// Node isimli class oluþturularak tree-trie node yapýsý tanýmlandý
 class Node{
 	
 	private HashMap<Character, Node> chain =new HashMap<>();
@@ -34,7 +35,8 @@ public class Trie {
 
 	public static void main(String[] args) {
 		Trie trie=new Trie();
-		
+
+// 'sozuk.txt' dosyasý okunarak kelimeler tree-trie yapýsýna eklendi		
 		System.out.println("Sözlük Yükleniyor Lütfen Bekleyiniz..");
 		  try {
 		      File myObj = new File("sozluk.txt");
@@ -56,6 +58,8 @@ public class Trie {
 		  
 		  int option=scan.nextInt();
 		  
+// While Döngüsü içerisinde Kullanýcýlar yapmak istedikleri Ýþlemleri yapabilirken Bu iþlemler -
+// arasýnda yönlendirilebildi.
 		  while (option<3 && option>0) {
 			
 			  switch (option) {
@@ -75,12 +79,15 @@ public class Trie {
 
 			}
 			 System.out.println("Kelime aramasý yapmak için '1' \nKelime eklemek için '2'"
-				  		+ " ye\nGeri dönmek için '3' e\nÇýkýþ yapmak için farklý herhangi bir sayý giriniz.. ");
+				  		+ " ye\nÇýkýþ yapmak için farklý herhangi bir sayý giriniz.. ");
 			 option=scan.nextInt();
 			
 		}
 	}
-	
+
+// Ýnsert isimli metotlarýmýzla Trie kelime aðacýmýza kelime ekleme iþlemleri yapýlýyor.
+// Kullanýcýnýn aramak için veya eklemek için girdiði string ifadelerin tamamý büyük harf olacak -
+//  þekilde güncellenerek arama ve ekleme iþlemleri yapýldý.
 	public void insert(String word) {
 		insert(word,root);
 		
@@ -99,28 +106,10 @@ public class Trie {
 		
 	}
 
-	public boolean search(String word) {
-		if (word==null || word.isEmpty()) {
-		return false;
-		}
-		return search(word,root);
-		
-	}
+// autocomplate ve populatewords isimli fonksiyonlarýmýzda ilk harfleri girilen -
+// kelimelerin opsiyonlarý döndürülürken tamamý girilen kelimenin kendisi dönderilmiþ oldu.
+// Böylece Dynamic Search iþlemi gerçeklerþtirildi.
 	
-	private boolean search(String word, Node node) {
-		
-		if (word==null || word.isEmpty()) {
-			return true;
-			}
-		char firsCharacter=word.charAt(0);
-		if(!node.contains(firsCharacter)) {
-			return false;
-		}
-		
-		return search(word.substring(1),node.get(firsCharacter));
-		
-	}
-
 	public List<String> autoComplete(String suggestString){
 		List<String> words=new ArrayList<String>();
 		if(suggestString==null || suggestString.isEmpty()) {
